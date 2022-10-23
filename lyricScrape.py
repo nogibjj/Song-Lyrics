@@ -13,12 +13,11 @@ def getLyrics(songs):
     for eachRow in songs.index:
         eachSong = songs.loc[eachRow,:]
         try:
-            print(f'google searching{eachSong}')
             lyricSearch = requestCall(
                 f"https://www.google.com/search?q={eachSong['Artist']} {eachSong['Song']} lyrics")
             pass
         except AssertionError as e:
-            print(f'Error, status code is: {e}')
+            # print(f'Error, status code is: {e}') Option to print error codes for troubleshooting
             continue
         lyricSoup = BeautifulSoup(lyricSearch.text, "html.parser")
         lyrics = lyricSoup.find("div", {"data-lyricid": re.compile(".*[Ll]yric.*")})
